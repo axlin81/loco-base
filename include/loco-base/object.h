@@ -10,6 +10,8 @@ typedef struct loco_object_s {
 	loco_handle_t allocator;
 } loco_object_t;
 
-loco_handle_t loco_object_create(const char *name, size_t size, loco_handle_t allocator);
+loco_handle_t loco_object_create(const char *name,
+                                 size_t size,
+                                 loco_handle_t allocator);
 
 #endif

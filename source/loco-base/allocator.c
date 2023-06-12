@@ -1,4 +1,5 @@
 #include <loco-base/allocator.h>
+#include <loco-base/memory.h>
 
 typedef struct allocator_s {
 	uintptr_t addr_beg;
@@ -12,7 +13,7 @@ typedef struct allocator_s {
 static struct {
 	uint8_t meta_alloc_mem[LOCO_CONFIG_META_ALLOCATOR_MEM];
 	allocator_t meta_alloc;
-} g_allocator __attribute__((aligned(LOCO_CONFIG_CACHE_LINE_SIZE))) = {
+} g_allocator LOCO_MEMORY_CACHE_ALIGN = {
 	.meta_alloc_mem = { 0 },
 	.meta_alloc = {
 		.addr_beg = (uintptr_t)&g_allocator.meta_alloc_mem[0],
@@ -57,15 +58,16 @@ loco_handle_t loco_allocator_create(const char *name, uintptr_t addr_beg, uintpt
 	return new_allocator;
 }
 
-void *loco_allocator_alloc(loco_handle_t inst, size_t bytes)
+void *loco_allocator_alloc(loco_handle_t instance, size_t bytes)
 {
-	allocator_t *self = (allocator_t *)inst;
-	bytes = round_up_to_alignment(inst, bytes);
+	allocator_t *self = (allocator_t *)instance;
+	bytes = round_up_to_alignment(instance, bytes);
 
 	const uintptr_t next_cur = self->addr_cur + bytes;
 	if (next_cur > self->addr_end) return NULL;
 
 	void *allocation = (void *)self->addr_cur;
+	memset(allocation, 0, bytes);
 	self->addr_cur = next_cur;
 
 	return allocation;
