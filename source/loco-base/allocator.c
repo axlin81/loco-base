@@ -1,5 +1,6 @@
 #include <loco-base/allocator.h>
 #include <loco-base/memory.h>
+#include <string.h>
 
 typedef struct allocator_s {
 	uintptr_t addr_beg;
@@ -31,7 +32,10 @@ static inline uintptr_t round_up_to_alignment(loco_handle_t inst, uintptr_t addr
 	return (addr + self->max_unaligned) & self->alignment_mask;
 }
 
-loco_handle_t loco_allocator_create(const char *name, uintptr_t addr_beg, uintptr_t addr_end, uintptr_t alignment)
+loco_handle_t loco_allocator_create(const char *name,
+                                    uintptr_t addr_beg,
+                                    uintptr_t addr_end,
+                                    uintptr_t alignment)
 {
 	const uintptr_t max_unaligned = alignment - 1;
 	const uintptr_t alignment_mask = ~max_unaligned;

@@ -16,7 +16,7 @@ loco_handle_t loco_publisher_create(const char *name,
                                     loco_handle_t owner)
 {
 	loco_object_t *owner_obj = (loco_object_t *)owner;
-	loco_publisher_t *new_publisher = loco_object_create(name, sizeof *publisher, owner_obj->allocator);
+	loco_publisher_t *new_publisher = loco_object_create(name, sizeof *new_publisher, owner_obj->allocator);
 	new_publisher->owner = owner_obj;
 	
 	return new_publisher;

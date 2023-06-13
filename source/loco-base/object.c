@@ -1,5 +1,6 @@
 #include <loco-base/object.h>
 #include <loco-base/allocator.h>
+#include <string.h>
 
 loco_handle_t loco_object_create(const char *name, size_t size, loco_handle_t allocator)
 {
@@ -7,9 +8,9 @@ loco_handle_t loco_object_create(const char *name, size_t size, loco_handle_t al
 	
 	if (object != NULL) {
 		if (name != NULL) {
-			strncpy(object->name, name, LOCO_CONFIG_OBJECT_NAME_MAX);
+			strncpy((char *)object, name, LOCO_CONFIG_OBJECT_NAME_MAX);
 		}
-		
+
 		object->allocator = allocator;
 	}
 

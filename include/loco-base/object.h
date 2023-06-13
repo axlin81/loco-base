@@ -2,6 +2,9 @@
 #define LOCO_BASE_OBJECT__H
 
 #include <loco-base/config.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 
 typedef void *loco_handle_t;
 
